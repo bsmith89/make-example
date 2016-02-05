@@ -29,6 +29,8 @@ def get_ascii_bars(values, truncate=True, maxlen=10, symbol='#'):
     maximum = max(values)
     if truncate:
         minimum = min(values) - 1
+    else:
+        minimum = 0
     prop_values = [(val - minimum) / (maximum - minimum) for val in values]
     biggest_bar = symbol * round(maxlen / len(symbol))
     bars = [biggest_bar[:round(frac * len(biggest_bar))] for frac in prop_values]
@@ -49,14 +51,15 @@ def typeset_labels(labels=None, gap=2):
     return output
 
 
-def plot_ascii_bars(values, labels=None, screenwidth=80, gap=2):
+def plot_ascii_bars(values, labels=None, screenwidth=80, gap=2, truncate=True):
     if not labels:
         try:
             values, labels = zip(*values)
         except TypeError:
             labels = len(values)
     labels = typeset_labels(labels=labels, gap=gap)
-    bars = get_ascii_bars(values, maxlen=screenwidth - gap - len(labels[0]))
+    bars = get_ascii_bars(values, maxlen=screenwidth - gap - len(labels[0]),
+                          truncate=truncate)
     return [s + b for s, b in zip(labels, bars)]
 
 
@@ -75,7 +78,7 @@ if __name__ == '__main__':
     # Plot
     if output_file == 'ascii':
         words, counts, _ = zip(*counts)
-        for line in plot_ascii_bars(counts[:limit], words[:limit]):
+        for line in plot_ascii_bars(counts[:limit], words[:limit], truncate=False):
             print(line)
     else:
         plot_word_counts(counts, limit)
