@@ -75,7 +75,7 @@ if __name__ == '__main__':
     # Plot
     if output_file == 'ascii':
         words, counts, _ = zip(*counts)
-        for i, line in zip(range(limit), plot_ascii_bars(counts, words)):
+        for line in plot_ascii_bars(counts[:limit], words[:limit]):
             print(line)
     else:
         plot_word_counts(counts, limit)
