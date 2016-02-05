@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import time
 
 DELIMITERS = ". , ; : ? $ @ ^ < > # % ` ! * - = ( ) [ ] { } / \" '".split()
 
@@ -22,7 +23,7 @@ def save_word_counts(filename, counts):
     """
     with open(filename, 'w') as output:
         for count in counts:
-            output.write("%s\n" % " ".join(str(c) for c in count))
+            output.write("%s\n" % "\t".join(str(c) for c in count))
 
 
 def load_word_counts(filename):
@@ -93,17 +94,21 @@ def filter_word_counts(counts, min_length=1):
     return stripped
 
 
-def calculate_percentages(counts):
+def calculate_percentages(counts, sleep=1e-3):
     """
     Given a list of (word, count) tuples, create a new list (word, count,
     percentage) where percentage is the percentage number of occurrences
     of this word compared to the total number of words.
+
+    For each word sleep for :sleep: seconds.
     """
     total = 0
     for count in counts:
         total += count[1]
-    tuples = [(word, count, (float(count) / total) * 100.0)
-              for (word, count) in counts]
+    tuples = []
+    for word, count in counts:
+        time.sleep(sleep)
+        tuples.append((word, count, (float(count) / total) * 100))
     return tuples
 
 
