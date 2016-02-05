@@ -45,14 +45,13 @@ def update_word_counts(line, counts):
     """
     Given a string, parse the string and update a dictionary of word
     counts (mapping words to counts of their frequencies). DELIMITERS are
-    removed before the string is parsed. The function is case-insensitive
-    and words in the dictionary are in lower-case.
+    removed before the string is parsed.
     """
     for purge in DELIMITERS:
         line = line.replace(purge, " ")
     words = line.split()
     for word in words:
-        word = word.lower().strip()
+        word = word.strip()
         if word in counts:
             counts[word] += 1
         else:
@@ -63,8 +62,7 @@ def calculate_word_counts(lines):
     """
     Given a list of strings, parse each string and create a dictionary of
     word counts (mapping words to counts of their frequencies). DELIMITERS
-    are removed before the string is parsed. The function is
-    case-insensitive and words in the dictionary are in lower-case.
+    are removed before the string is parsed.
     """
     counts = {}
     for line in lines:
