@@ -17,12 +17,12 @@ def plot_word_counts(counts, limit=10):
     limited_counts = counts[0:limit]
     word_data = [word for (word, _, _) in limited_counts]
     count_data = [count for (_, count, _) in limited_counts]
-    position = np.arange(len(word_data))
+    positions = range(len(word_data))
     width = 1.0
     ax = plt.axes()
-    ax.set_xticks(position + (width / 2))
+    ax.set_xticks([p + (width / 2) for p in positions])
     ax.set_xticklabels(word_data)
-    plt.bar(position, count_data, width, color='b')
+    plt.bar(positions, count_data, width, color='b')
 
 
 def get_ascii_bars(values, truncate=True, maxlen=10, symbol='#'):
